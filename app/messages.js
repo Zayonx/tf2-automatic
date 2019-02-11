@@ -108,7 +108,88 @@ function friendMessage (steamID, message) {
             }
             reply += '.\nYou can see my inventory and prices here as well: https://backpack.tf/profiles/' + Automatic.getOwnSteamID();
             Automatic.message(steamID64, reply);
-        } else if (command == 'price') {
+          } else if (command == 'uptime') {
+              function format(seconds) {
+                var days = Math.floor(seconds / 86400);
+                seconds -= days * 86400;
+
+                var hours = Math.floor(seconds / 3600) % 24;
+                seconds -= hours * 3600;
+
+                var minutes = Math.floor(seconds / 60) % 60;
+                seconds -= minutes * 60;
+
+                var seconds = seconds % 60;
+
+                if (days == 0 && hours == 0 && minutes == 0) {
+                    if (seconds > 1) {
+                        seconds = `${seconds} seconds.`
+                    } else {
+                        seconds = `${seconds} second.`
+                    }
+                    return seconds;
+                } else if (days == 0 && hours == 0) {
+                    if (minutes > 1) {
+                        minutes = `${minutes} minutes, `
+                    } else {
+                        minutes = `${minutes} minute, `
+                    }
+
+                    if (seconds > 1) {
+                        seconds = `${seconds} seconds.`
+                    } else {
+                        seconds = `${seconds} second.`
+                    }
+                    return minutes + seconds;
+                } else if (days == 0) {
+                    if (hours > 1) {
+                        hours = `${hours} hours, `
+                    } else {
+                        hours = `${hours} hour, `
+                    }
+
+                    if (minutes > 1) {
+                        minutes = `${minutes} minutes, `
+                    } else {
+                        minutes = `${minutes} minute, `
+                    }
+
+                    if (seconds > 1) {
+                        seconds = `${seconds} seconds.`
+                    } else {
+                        seconds = `${seconds} second.`
+                    }
+                    return hours + minutes + seconds;
+                } else {
+                    if (days > 1) {
+                        days = `${days} days, `
+                    } else {
+                        days = `${days} day, `
+                    }
+
+                    if (hours > 1) {
+                        hours = `${hours} hours, `
+                    } else {
+                        hours = `${hours} hour, `
+                    }
+
+                    if (minutes > 1) {
+                        minutes = `${minutes} minutes, `
+                    } else {
+                        minutes = `${minutes} minute, `
+                    }
+
+                    if (seconds > 1) {
+                        seconds = `${seconds} seconds.`
+                    } else {
+                        seconds = `${seconds} second.`
+                    }
+                    return days + hours + minutes + seconds;
+                }
+
+            }
+            Automatic.message(steamID64, `Current uptime: ${format(process.uptime())}`)
+          } else if (command == 'price') {
             message = removeLinkProtocol(message);
             const name = message.substr(message.toLowerCase().indexOf('price') + 6);
             if (name == '') {
